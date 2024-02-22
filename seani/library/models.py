@@ -1,5 +1,7 @@
 from django.db import models
 
+from cloudinary.models import CloudinaryField
+
 # Create your models here.
 class Module(models.Model):
     name = models.CharField(
@@ -14,7 +16,7 @@ class Module(models.Model):
     
     num_questions.short_description = "Número de preguntas:"
     
-    def _str_(self):
+    def __str__(self):
         return self.name
     
     class Meta:
@@ -29,10 +31,16 @@ class Question(models.Model):
     question_text = models.TextField(
         verbose_name = "Texto de la pregunta",
         null = True, blank = True)
-    question_image = models.ImageField(
+    # question_image = models.ImageField(
+    #     verbose_name = "Imagen de la Pregunta",
+    #     upload_to= "questions",
+    #      null = True, blank = True)
+    question_image = CloudinaryField(
         verbose_name = "Imagen de la Pregunta",
-        upload_to= "questions",
-         null = True, blank = True)
+        null = True, blank = True,
+        resource_type = "image",
+        folder = "questions"
+    )
 
 
     answer1 = models.CharField(
