@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Home Aspirante{% endblock %}
+
+{% block content %}
+
+<h1>Welcome {{ user.first_name }}</h1>
+
+<ul>
+{% for module in user.exam.modules.all %}
+<li><a href="{% url 'exam:question' module.id %}">{{ module.description }}</a></li>
+{% endfor %}
+</ul>
+
+
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Salir">
+</form>
+
+{% endblock %}
